@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Srinivas Jilagam — Portfolio</title>
+<meta name="description" content="Portfolio of Srinivas Jilagam — AI & ML student. Machine learning, web development, and real-world software projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Tokens
+   ========================================================= */
+:root {
+  --bg: #0b1410;
+  --bg-soft: #0e1814;
+  --surface: #122019;
+  --surface-2: #16271f;
+  --border: rgba(232, 240, 234, 0.09);
+  --text: #e8f0ea;
+  --text-muted: #8fa89b;
+  --accent: #4fd1a5;
+  --accent-soft: rgba(79, 209, 165, 0.13);
+  --alert: #f2a65a;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --maxw: 1120px;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0 0 0.5em; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); line-height: 1.05; font-weight: 700; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+h3 { font-size: 1.2rem; }
+p { margin: 0 0 1em; color: var(--text-muted); }
+a { color: var(--accent); text-decoration: none; }
+.mono { font-family: var(--font-mono); }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--accent); color: #04140e; padding: 0.5rem 1rem; z-index: 200; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* NAV */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(11,20,16,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; gap: 2rem; }
+.nav-logo { font-size: 1.05rem; color: var(--text); font-weight: 500; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 1.6rem; flex: 1; }
+.nav-links a { color: var(--text-muted); font-size: 0.92rem; transition: color 0.2s var(--ease); }
+.nav-links a:hover { color: var(--text); }
+.nav-status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2.4s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(79,209,165,0.5); } 70% { box-shadow: 0 0 0 7px rgba(79,209,165,0); } 100% { box-shadow: 0 0 0 0 rgba(79,209,165,0); } }
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 0; }
+.nav-toggle span { display: block; width: 100%; height: 2px; background: var(--text); transition: transform 0.25s var(--ease), opacity 0.25s var(--ease); }
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.4rem; border-radius: var(--radius-sm); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; border: 1px solid transparent; cursor: pointer; transition: transform 0.2s var(--ease), background 0.2s, border-color 0.2s; }
+.btn-primary { background: var(--accent); color: #04140e; }
+.btn-primary:hover { transform: translateY(-2px); background: #65e0b6; }
+.btn-ghost { color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* HERO */
+.hero { padding: 5.5rem 1.5rem 4rem; }
+.hero-inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
+.eyebrow { color: var(--accent); font-size: 0.78rem; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+.hero-sub { font-size: 1.05rem; max-width: 38ch; }
+.hero-cta { display: flex; gap: 0.9rem; margin-top: 1.6rem; flex-wrap: wrap; }
+
+.monitor-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6); }
+.monitor-head { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.live-tag { color: var(--alert); }
+#trafficChart { width: 100%; height: 160px; display: block; }
+.chart-grid { stroke: var(--border); stroke-width: 1; }
+.chart-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.chart-marker { fill: var(--alert); }
+.monitor-foot { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; min-height: 1.2em; }
+
+/* PANELS */
+.panel { padding: 4.5rem 1.5rem; }
+.panel-alt { background: var(--bg-soft); }
+.panel-inner { max-width: var(--maxw); margin: 0 auto; }
+.lead { font-size: 1.02rem; max-width: 68ch; }
+
+/* SKILLS */
+.skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.8rem; }
+.skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; }
+.skill-label { color: var(--accent); font-size: 0.75rem; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); padding: 0.32rem 0.7rem; border-radius: 99px; }
+
+/* PROJECTS */
+.project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; margin-top: 1.5rem; }
+.project-card--feature { border-color: rgba(79,209,165,0.22); }
+.project-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.project-tag { color: var(--alert); font-size: 0.78rem; }
+.project-card p { max-width: 70ch; }
+.project-link { display: inline-flex; gap: 0.3rem; margin-top: 0.8rem; font-weight: 600; font-size: 0.92rem; }
+.project-link:hover { text-decoration: underline; }
+
+/* TIMELINE */
+.timeline { list-style: none; margin: 1.8rem 0 0; padding: 0; border-left: 1px solid var(--border); }
+.timeline-item { position: relative; padding: 0 0 2rem 2rem; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot { position: absolute; left: -5.5px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.timeline-date { color: var(--alert); font-size: 0.75rem; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+.timeline-content h3 { margin-bottom: 0.2rem; }
+.timeline-content p:last-child { margin-bottom: 0; }
+
+/* CERTIFICATIONS */
+.log-list { list-style: none; margin: 1.8rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }
+.log-item { display: flex; gap: 1.2rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--border); }
+.log-item:last-child { border-bottom: none; }
+.log-date { color: var(--accent); flex-shrink: 0; padding-top: 0.15rem; }
+.log-title { color: var(--text); font-weight: 600; margin-bottom: 0.15rem; }
+.log-desc { margin: 0; font-size: 0.92rem; }
+
+/* ACHIEVEMENTS */
+.achieve-list { list-style: none; margin: 1.8rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+.achieve-item { display: flex; gap: 1rem; align-items: flex-start; }
+.achieve-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--accent); margin-top: 0.15rem; }
+.achieve-item p { margin: 0; color: var(--text); }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.contact-list { list-style: none; margin: 1.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+.contact-list li { display: flex; align-items: center; gap: 0.7rem; }
+.contact-list svg { width: 19px; height: 19px; color: var(--accent); flex-shrink: 0; }
+.contact-list a { color: var(--text); }
+.contact-list a:hover { color: var(--accent); }
+.contact-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
+.field input, .field textarea { font-family: var(--font-body); font-size: 0.95rem; color: var(--text); background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+.field-error { color: var(--alert); min-height: 1em; font-size: 0.78rem; }
+.form-status { min-height: 1.2em; color: var(--accent); font-size: 0.82rem; }
+
+/* FOOTER */
+.site-footer { max-width: var(--maxw); margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+.back-top { color: var(--text-muted); }
+.back-top:hover { color: var(--accent); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .nav-status { display: none; }
+}
+@media (max-width: 720px) {
+  .nav-links { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-soft); border-bottom: 1px solid var(--border); flex-direction: column; padding: 1rem 1.5rem; gap: 0.9rem; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); }
+  .nav-links.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .nav-toggle { display: flex; }
+}
+@media (max-width: 540px) {
+  .hero { padding: 3.5rem 1.2rem 2.5rem; }
+  .panel { padding: 3rem 1.2rem; }
+  .project-card-head { flex-direction: column; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo mono">SJ<span>_</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#certifications">Certs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-status mono" aria-hidden="true">
+      <span class="status-dot"></span>Open to internships
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-text reveal">
+        <p class="eyebrow mono">PORTFOLIO // STATUS: ONLINE</p>
+        <h1>Built to notice<br>what shouldn't be there.</h1>
+        <p class="hero-sub">I'm <strong>Srinivas Jilagam</strong>, a B.Tech CSE (AI &amp; ML) student at Raghu Engineering College. I build software that finds patterns — in network traffic, in spending habits, in problems worth solving.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="monitor-panel">
+          <div class="monitor-head mono">
+            <span>traffic_monitor.log</span>
+            <span class="live-tag">● LIVE</span>
+          </div>
+          <svg id="trafficChart" viewBox="0 0 480 200" preserveAspectRatio="none">
+            <line x1="0" y1="100" x2="480" y2="100" class="chart-grid"></line>
+            <path id="chartBaseline" class="chart-line"></path>
+            <circle id="chartMarker" class="chart-marker" r="5" opacity="0"></circle>
+          </svg>
+          <div class="monitor-foot mono" id="monitorFoot">scanning packets…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="panel" id="about">
+    <div class="panel-inner">
+      <p class="eyebrow mono">PROFILE</p>
+      <h2 class="reveal">About</h2>
+      <p class="lead reveal">I'm a B.Tech Computer Science student specialising in AI &amp; Machine Learning, currently in my third year with a CGPA of 8.64. I like working through problems methodically — whether that's training a model to flag malicious network traffic, or designing a database that tracks where money actually goes.</p>
+      <p class="lead reveal">I'm comfortable across the stack: Python for logic and ML, HTML/CSS for interfaces, MySQL for data, and Git for keeping it all in order. Right now I'm deepening my skills in full front-to-back web development through the ApexPlanet internship programme.</p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="panel panel-alt" id="skills">
+    <div class="panel-inner">
+      <p class="eyebrow mono">SKILL SET</p>
+      <h2 class="reveal">Tools &amp; concepts</h2>
+      <div class="skill-grid">
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Languages</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">C (basics)</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Technologies</p>
+          <div class="chips"><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span><span class="chip">Machine Learning</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Database</p>
+          <div class="chips"><span class="chip">MySQL</span><span class="chip">phpMyAdmin</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Backend</p>
+          <div class="chips"><span class="chip">PHP (basics)</span><span class="chip">XAMPP</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Tools</p>
+          <div class="chips"><span class="chip">GitHub</span><span class="chip">VS Code</span><span class="chip">Git</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <p class="mono skill-label">Core concepts</p>
+          <div class="chips"><span class="chip">DSA</span><span class="chip">OOP</span><span class="chip">DBMS</span><span class="chip">SDLC</span><span class="chip">OS (basics)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="panel" id="projects">
+    <div class="panel-inner">
+      <p class="eyebrow mono">PROJECT LOG</p>
+      <h2 class="reveal">Things I've built</h2>
+
+      <article class="project-card project-card--feature reveal">
+        <div class="project-card-head">
+          <h3>DDoS Attack Detection System</h3>
+          <span class="mono project-tag">Machine Learning · Python</span>
+        </div>
+        <p>A Random Forest classifier that flags malicious network traffic by learning the difference between normal and abnormal patterns. Added a real-time monitoring view so the model's decisions are visible as they happen, instead of buried in a log file.</p>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">Random Forest</span><span class="chip">Network Analysis</span><span class="chip">Real-time Monitoring</span>
+        </div>
+        <a href="https://github.com/srinivas-j6" class="project-link" target="_blank" rel="noopener">View on GitHub →</a>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-card-head">
+          <h3>Personal Finance Management System</h3>
+          <span class="mono project-tag">Python · MySQL</span>
+        </div>
+        <p>An application for logging day-to-day expenses and generating reports from them. Focused on a clean add / update / view flow backed by a proper relational database, so financial records stay organised and queryable.</p>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">MySQL</span><span class="chip">CRUD</span><span class="chip">Reporting</span>
+        </div>
+        <a href="https://github.com/srinivas-j6" class="project-link" target="_blank" rel="noopener">View on GitHub →</a>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-card-head">
+          <h3>Personal Portfolio Website</h3>
+          <span class="mono project-tag">HTML · CSS · JavaScript</span>
+        </div>
+        <p>This site — built from scratch using semantic HTML5, responsive CSS3 (Flexbox &amp; Grid), and vanilla JavaScript. Features include scroll-reveal animations, form validation, an animated network-traffic visualiser, and a mobile-responsive navigation.</p>
+        <div class="chips">
+          <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span><span class="chip">GitHub Pages</span>
+        </div>
+        <a href="https://github.com/srinivas-j6" class="project-link" target="_blank" rel="noopener">View on GitHub →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="panel panel-alt" id="education">
+    <div class="panel-inner">
+      <p class="eyebrow mono">ACADEMIC RECORD</p>
+      <h2 class="reveal">Education</h2>
+      <ol class="timeline">
+        <li class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="mono timeline-date">CURRENT</p>
+            <h3>Raghu Engineering College, Visakhapatnam</h3>
+            <p>B.Tech in CSE — Artificial Intelligence &amp; Machine Learning<br>CGPA: 8.64 (through 3rd year)</p>
+          </div>
+        </li>
+        <li class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="mono timeline-date">INTERMEDIATE</p>
+            <h3>Aditya Junior College</h3>
+            <p>92.8%</p>
+          </div>
+        </li>
+        <li class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="mono timeline-date">SSC</p>
+            <h3>Wisdom E.M. High School</h3>
+            <p>99.8%</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="panel" id="certifications">
+    <div class="panel-inner">
+      <p class="eyebrow mono">CERTIFICATIONS</p>
+      <h2 class="reveal">Logged credentials</h2>
+      <ul class="log-list">
+        <li class="log-item reveal">
+          <span class="mono log-date">2026-03</span>
+          <div>
+            <p class="log-title">Deloitte Technology Job Simulation — Forage</p>
+            <p class="log-desc">Completed practical tasks in coding and software development.</p>
+          </div>
+        </li>
+        <li class="log-item reveal">
+          <span class="mono log-date">2026-03</span>
+          <div>
+            <p class="log-title">Deloitte Data Analytics Job Simulation — Forage</p>
+            <p class="log-desc">Completed practical tasks in data analysis and forensic technology.</p>
+          </div>
+        </li>
+        <li class="log-item reveal">
+          <span class="mono log-date">2024-12</span>
+          <div>
+            <p class="log-title">Python Programming Course (Hands-On) — SkillRack</p>
+            <p class="log-desc">Hands-on training in Python fundamentals and problem solving.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section class="panel panel-alt" id="achievements">
+    <div class="panel-inner">
+      <p class="eyebrow mono">ACHIEVEMENTS</p>
+      <h2 class="reveal">Beyond the code</h2>
+      <ul class="achieve-list">
+        <li class="achieve-item reveal">
+          <svg class="achieve-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h14v3a7 7 0 0 1-14 0V4Z"/><path d="M5 6H3a2 2 0 0 0 2 4M19 6h2a2 2 0 0 1-2 4"/><path d="M12 14v3M9 20h6"/></svg>
+          <p>3rd Prize — PPT Presentation on Neuralink Technology, Raghu Engineering College</p>
+        </li>
+        <li class="achieve-item reveal">
+          <svg class="achieve-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+          <p>2nd position in the department for consistent academic performance</p>
+        </li>
+        <li class="achieve-item reveal">
+          <svg class="achieve-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="3"/><path d="M2 20c0-3 2.7-5 6-5s6 2 6 5M13 15.5c2.6.3 5 2.1 5 4.5"/></svg>
+          <p>Active member of NSS (National Service Scheme) — regular participant in social service</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="panel" id="contact">
+    <div class="panel-inner contact-grid">
+      <div class="reveal">
+        <p class="eyebrow mono">CONTACT</p>
+        <h2>Let's talk</h2>
+        <p class="lead">Open to internships and software roles. Reach out directly or use the form.</p>
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <a href="mailto:srinivasjilagam65@gmail.com">srinivasjilagam65@gmail.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+            <a href="tel:+917989863879">+91 7989863879</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8v8M8 8h.01M12 16v-4a2 2 0 0 1 4 0v4M12 12v4"/></svg>
+            <a href="https://linkedin.com/in/srinivas-jilagam-j6" target="_blank" rel="noopener">linkedin.com/in/srinivas-jilagam-j6</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/></svg>
+            <a href="https://github.com/srinivas-j6" target="_blank" rel="noopener">github.com/srinivas-j6</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <label class="field">
+          <span>Name</span>
+          <input type="text" name="name" id="name" required placeholder="Your name">
+          <small class="field-error" data-for="name"></small>
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" id="email" required placeholder="you@example.com">
+          <small class="field-error" data-for="email"></small>
+        </label>
+        <label class="field">
+          <span>Message</span>
+          <textarea name="message" id="message" rows="4" required placeholder="What would you like to discuss?"></textarea>
+          <small class="field-error" data-for="message"></small>
+        </label>
+        <button type="submit" class="btn btn-primary">Send message</button>
+        <p class="form-status mono" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="mono">© 2026 Srinivas Jilagam — Built with HTML, CSS &amp; JavaScript.</p>
+  <a href="#top" class="mono back-top">Back to top ↑</a>
+</footer>
+
+<script>
+/* =========================================================
+   1. Mobile nav toggle
+   ========================================================= */
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', () => {
+  const isOpen = navToggle.classList.toggle('is-open');
+  navLinks.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navToggle.classList.remove('is-open');
+    navLinks.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* =========================================================
+   2. Scroll-reveal (IntersectionObserver)
+   ========================================================= */
+const revealEls = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(entry.target);
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, idx * 80);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* =========================================================
+   3. Animated traffic-monitor chart (hero visual)
+   ========================================================= */
+(function () {
+  const W = 480, H = 200, POINTS = 40;
+  const path   = document.getElementById('chartBaseline');
+  const marker = document.getElementById('chartMarker');
+  const foot   = document.getElementById('monitorFoot');
+
+  if (!path) return;
+
+  const msgs = [
+    'scanning packets…',
+    'baseline established.',
+    '⚠ anomaly spike detected',
+    'random-forest classifying…',
+    '✓ flagged — mitigation applied',
+    'monitoring resumed.',
+  ];
+  let msgIdx = 0;
+  let data = Array.from({ length: POINTS }, () => H / 2 + (Math.random() - 0.5) * 30);
+
+  function buildPath(pts) {
+    return pts.map((y, x) => {
+      const px = (x / (POINTS - 1)) * W;
+      return (x === 0 ? 'M' : 'L') + px.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ');
+  }
+
+  function tick() {
+    const spiked = Math.random() < 0.08;
+    const newY = spiked
+      ? H * 0.08 + Math.random() * H * 0.12
+      : H / 2 + (Math.random() - 0.5) * 36;
+
+    data.shift();
+    data.push(newY);
+    path.setAttribute('d', buildPath(data));
+
+    marker.setAttribute('cx', W);
+    marker.setAttribute('cy', data[data.length - 1]);
+    marker.setAttribute('opacity', '1');
+
+    if (spiked) {
+      msgIdx = (msgIdx + 1) % msgs.length;
+      foot.textContent = msgs[msgIdx];
+      foot.style.color = msgIdx === 2 ? '#f2a65a' : msgIdx === 4 ? '#4fd1a5' : '#8fa89b';
+    }
+  }
+
+  setInterval(tick, 160);
+})();
+
+/* =========================================================
+   4. Contact form validation
+   ========================================================= */
+const form   = document.getElementById('contactForm');
+const status = document.getElementById('formStatus');
+
+function showError(fieldId, msg) {
+  const el = document.querySelector('[data-for="' + fieldId + '"]');
+  if (el) el.textContent = msg;
+}
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(el => (el.textContent = ''));
+}
+function validateEmail(val) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+}
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  clearErrors();
+  status.textContent = '';
+
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  let valid = true;
+
+  if (!name) { showError('name', 'Name is required.'); valid = false; }
+  if (!email) { showError('email', 'Email is required.'); valid = false; }
+  else if (!validateEmail(email)) { showError('email', 'Enter a valid email address.'); valid = false; }
+  if (!message) { showError('message', 'Message cannot be empty.'); valid = false; }
+  else if (message.length < 10) { showError('message', 'Message must be at least 10 characters.'); valid = false; }
+
+  if (!valid) return;
+
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = 'Send message';
+    status.textContent = "✓ Message sent — I'll get back to you soon.";
+    form.reset();
+  }, 1400);
+});
+
+/* =========================================================
+   5. Active nav link on scroll
+   ========================================================= */
+const sections   = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a');
+
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--text)'
+            : '';
+        });
+      }
+    });
+  },
+  { rootMargin: '-40% 0px -55% 0px' }
+);
+
+sections.forEach(s => sectionObserver.observe(s));
+
+</script>
+</body>
+</html>
