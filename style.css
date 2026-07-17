@@ -174,3 +174,7 @@ a { color: var(--accent); text-decoration: none; }
   .panel { padding: 3rem 1.2rem; }
   .project-card-head { flex-direction: column; align-items: flex-start; }
 }
+.btn:hover {
+    transform: translateY(-3px);
+    transition: 0.3s ease;
+}
